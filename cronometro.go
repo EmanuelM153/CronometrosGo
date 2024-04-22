@@ -24,7 +24,7 @@ const (
 func (c *Cronometro) Init(inc time.Duration) chan time.Duration {
 	c.transcurrido = 0
 	c.incremento = inc
-	c.estado = Detenido
+	c.estado = Cronometrando
 	c.tick = make(chan time.Duration)
 	return c.tick
 }
@@ -34,7 +34,7 @@ func cronometrar(c *Cronometro) {
 		c.Lock()
 		switch c.estado {
 		case Detenido:
-			runtime.Gosched()
+			return
 		case Pausado:
 			runtime.Gosched()
 		default:
@@ -50,13 +50,16 @@ func cronometrar(c *Cronometro) {
 	}
 }
 
-func (c *Cronometro) Iniciar() {
-	c.transcurrido = 0
-	if c.estado == Detenido {
+func (c *Cronometro) Iniciar() bool {
+	iniciado := false
+	if c.estado != Detenido {
+		c.transcurrido = 0
 		c.cronometro = *time.NewTicker(c.incremento)
 		go cronometrar(c)
+		c.estado = Cronometrando
+		iniciado = true
 	}
-	c.estado = Cronometrando
+	return iniciado
 }
 
 func (c *Cronometro) Reanudar() {

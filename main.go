@@ -52,8 +52,9 @@ func main() {
 	})
 
 	cron1Iniciar := widget.NewButton("Iniciar", func() {
-		ponerTiempo(cron1TiempoLbl, 0)
-		cronometro1.Iniciar()
+		if cronometro1.Iniciar() {
+			ponerTiempo(cron1TiempoLbl, 0)
+		}
 	})
 	cron1Pausar := widget.NewButton("Pausar", func() {
 		cronometro1.Pausar()
@@ -66,8 +67,9 @@ func main() {
 	})
 
 	cron2Iniciar := widget.NewButton("Iniciar", func() {
-		ponerTiempo(cron2TiempoLbl, 0)
-		cronometro2.Iniciar()
+		if cronometro2.Iniciar() {
+			ponerTiempo(cron2TiempoLbl, 0)
+		}
 	})
 	cron2Pausar := widget.NewButton("Pausar", func() {
 		cronometro2.Pausar()
@@ -80,8 +82,9 @@ func main() {
 	})
 
 	cron3Iniciar := widget.NewButton("Iniciar", func() {
-		ponerTiempo(cron3TiempoLbl, 0)
-		cronometro3.Iniciar()
+		if cronometro3.Iniciar() {
+			ponerTiempo(cron3TiempoLbl, 0)
+		}
 	})
 	cron3Pausar := widget.NewButton("Pausar", func() {
 		cronometro3.Pausar()
